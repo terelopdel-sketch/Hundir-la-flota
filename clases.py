@@ -21,7 +21,7 @@ def crea_barco_aleatorio(tablero, eslora, num_intentos=100):
 
         barco = []
 
-        # 📍 Punto inicial
+        # Punto inicial
         fila = random.randint(0, indice_max_filas)
         columna = random.randint(0, indice_max_columnas)
 
@@ -30,11 +30,11 @@ def crea_barco_aleatorio(tablero, eslora, num_intentos=100):
 
         barco.append(pieza_original)
 
-        # 🔄 Orientación
+        # Orientación
         orientacion = random.choice(ORIENTACIONES)
         print("Con orientación", orientacion)
 
-        # 🚢 Construir barco
+        # Construir barco
         for i in range(eslora - 1):
 
             if orientacion == "N":
@@ -49,7 +49,7 @@ def crea_barco_aleatorio(tablero, eslora, num_intentos=100):
             pieza = (fila, columna)
             barco.append(pieza)
 
-        # 🧪 Intentar colocarlo
+        # Intentar colocarlo
         tablero_temp = colocar_barco_plus(tablero, barco)
 
         if isinstance(tablero_temp, np.ndarray):
@@ -59,3 +59,19 @@ def crea_barco_aleatorio(tablero, eslora, num_intentos=100):
         print("Intentando colocar otro barco...")
 
     return tablero  # si falla tras muchos intentos
+
+# Realizar disparo
+
+def realizar_disparo(tablero, coordenada):
+    if tablero[coordenada] == BARCO:
+        tablero[coordenada] = IMPACTO
+        print("¡Tocado!")
+    elif tablero[coordenada] == AGUA:
+        tablero[coordenada] = FALLO
+        print("Agua.")
+    elif tablero[coordenada] == IMPACTO or tablero[coordenada] == FALLO:
+        print("Ya has disparado aquí.")
+
+# Mostrar tablero del jugador 
+
+def display 
