@@ -1,77 +1,149 @@
+class Tablero:
+    """
+    Representa el tablero de juego de un jugador o de la máquina.
+    """
 
-Class Tablero:
+    def __init__(self, id_jugador: str):
+        self.id_jugador = id_jugador
+        self.size = DIMENSION
+        self.tablero = np.full((self.size, self.size), AGUA)
+        self.seguimiento = np.full((self.size, self.size), AGUA)
 
-# Define el nombre del jugador, tamaño del tablero, el tablero del jugador1 y jugador 2
+    def colocar_barcos(self):
+        """
+        Coloca todos los barcos definidos en BARCOS.
+        """
+        for eslora in BARCOS.values():
+            self._colocar_barco_individual(eslora)
 
-def __init__(self, player_id: str):
-    self.player_id = player_id
-    self.size = DIMENSION
-    self.board = np.full((self.size, self.size), AGUA)
-    self.tracking = np.full((self.size, self.size), AGUA)
+    def _colocar_barco_individual(self, eslora):
+        """
+        Coloca un barco individual de forma aleatoria.
+        """
+        while True:
+            barco = []
 
-# Coloca barcos de forma aleatoria en el tablero del jugador
+            fila = random.randint(0, self.size - 1)
+            columna = random.randint(0, self.size - 1)
 
-def crea_barco_aleatorio(tablero, eslora, num_intentos=100):
-    indice_max_filas = tablero.shape[0] - 1
-    indice_max_columnas = tablero.shape[1] - 1
-    contador = 0
+            barco.append((fila, columna))
 
-    while contador <= num_intentos:
-        contador += 1
+            orientacion = random.choice(ORIENTACIONES)
 
-        barco = []
+            for _ in range(eslora - 1):
+                if orientacion == "N":
+                    fila -= 1
+                elif orientacion == "S":
+                    fila += 1
+                elif orientacion == "O":
+                    columna -= 1
+                elif orientacion == "E":
+                    columna += 1
 
-        # Punto inicial
-        fila = random.randint(0, indice_max_filas)
-        columna = random.randint(0, indice_max_columnas)
+                barco.append((fila, columna))
 
-        pieza_original = (fila, columna)
-        print("Pieza original:", pieza_original)
+            valido = True
+            for x, y in barco:
+                if x < 0 or x >= self.size or y < 0 or y >= self.size:
+                    valido = False
+                    break
+                if self.tablero[x][y] == BARCO:
+                    valido = False
+                    break
 
-        barco.append(pieza_original)
+            if not valido:
+                continue
 
-        # Orientación
-        orientacion = random.choice(ORIENTACIONES)
-        print("Con orientación", orientacion)
+            for x, y in barco:
+                self.tablero[x][y] = BARCO
 
-        # Construir barco
-        for i in range(eslora - 1):
+            break
 
-            if orientacion == "N":
-                fila -= 1
-            elif orientacion == "S":
-                fila += 1
-            elif orientacion == "O":
-                columna -= 1
-            elif orientacion == "E":
-                columna += 1
+    def recibir_disparo(self, x: int, y: int) -> bool:
+        """
+        Procesa un disparo recibido.
+        """
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            raise ValueError("Coordenadas fuera del tablero")
 
-            pieza = (fila, columna)
-            barco.append(pieza)
+        if self.tablero[x][y] == BARCO:
+            self.tablero[x][y] = IMPACTO
+            return True
 
-        # Intentar colocarlo
-        tablero_temp = colocar_barco_plus(tablero, barco)
+        elif self.tablero[x][y] == AGUA:
+            self.tablero[x][y] = FALLO
+            return False
 
-        if isinstance(tablero_temp, np.ndarray):
-            print("Barco colocado, número de intentos:", contador)
-            return tablero_temp
+        return False
 
-        print("Intentando colocar otro barco...")
+    def disparar(self, tablero_rival, x: int, y: int):
+        """
+        Disparo manual del jugador.
+        """
+        if x < 0 or x >= self.size or y < 0 or y >= self.size:
+            raise ValueError("Coordenadas fuera del tablero")
 
-    return tablero  # si falla tras muchos intentos
+        if self.seguimiento[x][y] in (IMPACTO, FALLO):
+            print("Ya habías disparado en esa posición.")
+            return None
 
-# Realizar disparo
+        acierto = tablero_rival.recibir_disparo(x, y)
 
-def realizar_disparo(tablero, coordenada):
-    if tablero[coordenada] == BARCO:
-        tablero[coordenada] = IMPACTO
-        print("¡Tocado!")
-    elif tablero[coordenada] == AGUA:
-        tablero[coordenada] = FALLO
-        print("Agua.")
-    elif tablero[coordenada] == IMPACTO or tablero[coordenada] == FALLO:
-        print("Ya has disparado aquí.")
+        if acierto:
+            self.seguimiento[x][y] = IMPACTO
+            print("¡Impacto!")
+            return True
+        else:
+            self.seguimiento[x][y] = FALLO
+            print("Agua.")
+            return False
 
-# Mostrar tablero del jugador 
+    def disparo_aleatorio(self, tablero_rival):
+        """
+        Disparo automático de la máquina.
+        """
+        while True:
+            x = random.randint(0, self.size - 1)
+            y = random.randint(0, self.size - 1)
 
-def display 
+            if self.seguimiento[x][y] in (IMPACTO, FALLO):
+                continue
+
+            acierto = tablero_rival.recibir_disparo(x, y)
+
+            if acierto:
+                self.seguimiento[x][y] = IMPACTO
+            else:
+                self.seguimiento[x][y] = FALLO
+
+            return x, y, acierto
+
+    def mostrar_tablero(self, ocultar_barcos=False):
+        """
+        Muestra el tablero propio.
+        """
+        print(f"\nTablero de {self.id_jugador}")
+
+        for fila in self.tablero:
+            fila_mostrar = []
+            for celda in fila:
+                if ocultar_barcos and celda == BARCO:
+                    fila_mostrar.append(AGUA)
+                else:
+                    fila_mostrar.append(celda)
+            print(" ".join(fila_mostrar))
+
+    def mostrar_seguimiento(self):
+        """
+        Muestra el tablero de disparos realizados al rival.
+        """
+        print(f"\nSeguimiento de {self.id_jugador}")
+
+        for fila in self.seguimiento:
+            print(" ".join(fila))
+
+    def todos_barcos_hundidos(self) -> bool:
+        """
+        Comprueba si ya no quedan barcos.
+        """
+        return not (BARCO in self.tablero)
