@@ -1,10 +1,14 @@
 class Tablero:
+    import numpy as np
+    import random
+    from constantes import DIMENSION, AGUA, IMPACTO,FALLO, ORIENTACIONES, BARCO
     """
     Representa el tablero de juego de un jugador o de la máquina.
     """
 
-    def __init__(self, id_jugador: str):
-        self.id_jugador = id_jugador
+    def __init__(self, id_jugador: str, barcos : dict):
+        self.player_id = player_id
+        self.barcos = barcos #diccionario de barcos
         self.size = DIMENSION
         self.tablero = np.full((self.size, self.size), AGUA)
         self.seguimiento = np.full((self.size, self.size), AGUA)
@@ -13,10 +17,10 @@ class Tablero:
         """
         Coloca todos los barcos definidos en BARCOS.
         """
-        for eslora in BARCOS.values():
+        for eslora in barcos.values():
             self._colocar_barco_individual(eslora)
 
-    def _colocar_barco_individual(self, eslora):
+    def _colocar_barco_individual(self):
         """
         Coloca un barco individual de forma aleatoria.
         """
@@ -76,48 +80,7 @@ class Tablero:
 
         return False
 
-    def disparar(self, tablero_rival, x: int, y: int):
-        """
-        Disparo manual del jugador.
-        """
-        if x < 0 or x >= self.size or y < 0 or y >= self.size:
-            raise ValueError("Coordenadas fuera del tablero")
-
-        if self.seguimiento[x][y] in (IMPACTO, FALLO):
-            print("Ya habías disparado en esa posición.")
-            return None
-
-        acierto = tablero_rival.recibir_disparo(x, y)
-
-        if acierto:
-            self.seguimiento[x][y] = IMPACTO
-            print("¡Impacto!")
-            return True
-        else:
-            self.seguimiento[x][y] = FALLO
-            print("Agua.")
-            return False
-
-    def disparo_aleatorio(self, tablero_rival):
-        """
-        Disparo automático de la máquina.
-        """
-        while True:
-            x = random.randint(0, self.size - 1)
-            y = random.randint(0, self.size - 1)
-
-            if self.seguimiento[x][y] in (IMPACTO, FALLO):
-                continue
-
-            acierto = tablero_rival.recibir_disparo(x, y)
-
-            if acierto:
-                self.seguimiento[x][y] = IMPACTO
-            else:
-                self.seguimiento[x][y] = FALLO
-
-            return x, y, acierto
-
+    
     def mostrar_tablero(self, ocultar_barcos=False):
         """
         Muestra el tablero propio.
@@ -147,3 +110,5 @@ class Tablero:
         Comprueba si ya no quedan barcos.
         """
         return not (BARCO in self.tablero)
+
+        asfa
