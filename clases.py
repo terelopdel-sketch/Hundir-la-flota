@@ -67,18 +67,15 @@ class Tablero:
         """
         Procesa un disparo recibido.
         """
-        if x < 0 or x >= self.size or y < 0 or y >= self.size:
-            raise ValueError("Coordenadas fuera del tablero")
 
         if self.tablero[x][y] == BARCO:
             self.tablero[x][y] = IMPACTO
-            return True
+            return IMPACTO
 
         elif self.tablero[x][y] == AGUA:
             self.tablero[x][y] = FALLO
-            return False
+            return FALLO
 
-        return False
 
     
     def mostrar_tablero(self, ocultar_barcos=False):
