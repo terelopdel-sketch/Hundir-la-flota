@@ -1,14 +1,15 @@
 # ============================================================
 # MAIN - Hundir la Flota
 # ============================================================
+import numpy as np
 
 from clases import *
-from funciones import *
+from funciones import (pedir_coordenadas, mostrar_tableros, imprimir_resultado, mensaje_bienvenida, turno_maquina)
 from variables import *
 
 
 def main():
-    mensaje_bienvenida()
+    bienvenida()
 
     # ---- Inicialización (solo una vez) ----
     tablero_jugador = Tablero(jugador_id="Jugador", barcos=BARCOS)
@@ -26,7 +27,7 @@ def main():
     while True:
 
         # ---- TURNO DEL JUGADOR ----
-        imprimir_tablero(tablero_jugador, tablero_maquina)
+        mostrar_tableros(tablero_jugador, tablero_maquina)
 
         turno_jugador = True
         while turno_jugador:
