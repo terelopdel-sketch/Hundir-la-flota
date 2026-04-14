@@ -1,6 +1,7 @@
 import numpy as np
 from variables import *
 
+<<<<<<< HEAD
 def bienvenida():
     """Muestra el mensaje de bienvenida y las reglas del juego."""
     print(f"\n{'='*40}")
@@ -26,6 +27,20 @@ def bienvenida():
     """.format(dim=DIMENSION - 1))
     print(f"{'='*40}")
     input("Pulsa ENTER para comenzar")
+=======
+
+def mostrar_tableros(tablero_jugador, tablero_maquina):
+    """Muestra el tablero del jugador completo y el de la máquina sin barcos."""
+    print(f"\n{'='*30}")
+    print("  TU TABLERO")
+    print(f"{'='*30}")
+    tablero_jugador.imprimir(mostrar_barco=True)
+
+    print(f"\n{'='*30}")
+    print("  TABLERO ENEMIGO")
+    print(f"{'='*30}")
+    tablero_maquina.imprimir()
+>>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 
 def mostrar_tableros(tablero_jugador, tablero_maquina):
     """Muestra el tablero del jugador completo y el de la máquina sin barcos."""
@@ -53,6 +68,10 @@ def pedir_coordenadas(tablero_visible):
             return fila, col
         except ValueError:
             print("  Introduce numeros enteros.")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 
 def turno_maquina(tablero_visible):
     """Genera coordenadas aleatorias validas para la maquina."""
@@ -62,6 +81,10 @@ def turno_maquina(tablero_visible):
         if tablero_visible[fila, col] not in [IMPACTO, FALLO]:
             return fila, col
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 def imprimir_resultado(ganador):
     """Imprime el mensaje final segun quien haya ganado."""
     print(f"\n{'='*30}")
