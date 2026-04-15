@@ -65,7 +65,7 @@ def coordenadas_maquina(disparo_maquina):
         col  = np.random.randint(0, DIMENSION)
         if (fila, col)in disparo_maquina:
             return fila, col
-        
+   
 def imprimir_resultado(ganador):
     """Imprime el mensaje final segun quien haya ganado."""
     print(f"\n{'='*30}")
