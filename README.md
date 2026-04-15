@@ -1,2 +1,2 @@
 # Hundir-la-flota
-Challenger hundir la flota: Raquel, Ali, Tere.
+Challenger hundir la flota: Raquel, Ali, Ares y Tere.
