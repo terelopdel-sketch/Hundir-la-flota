@@ -23,7 +23,7 @@ def bienvenida():
      del enemigo primero.
   
   5. Introduce fila y columna (0-{dim}) 
-     cuando se te pida.
+     cuando se te pida..
           
   6. Simbolos de tablero 
      - Barco intacto: 'O'
