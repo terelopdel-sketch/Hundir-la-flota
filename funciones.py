@@ -7,7 +7,7 @@ def bienvenida():
     print("       BIENVENIDO A HUNDIR LA FLOTA")
     print(f"{'='*40}")
     print("""
-  REGLAS DEL JUEGO:
+  REGLAS DEL JUEGO
   
   1. Cada jugador tiene un tablero con barcos
      colocados aleatoriamente.
