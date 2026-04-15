@@ -1,7 +1,6 @@
 import numpy as np
 from variables import *
 
-<<<<<<< HEAD
 def bienvenida():
     """Muestra el mensaje de bienvenida y las reglas del juego."""
     print(f"\n{'='*40}")
@@ -13,7 +12,7 @@ def bienvenida():
   1. Cada jugador tiene un tablero con barcos
      colocados aleatoriamente.
   
-  2. Por turnos, tú y la máquina elegiréis 
+  2. Por turnos, tu y la maquina elegiréis 
      coordenadas para disparar.
   
   3. Si disparas sobre un barco -> IMPACTO 
@@ -32,21 +31,19 @@ def bienvenida():
      - Disparo fallido: '-'   
           """) 
    
-=======
-
 def mostrar_tableros(tablero_jugador, tablero_maquina):
     """Muestra el tablero del jugador completo y el de la máquina sin barcos."""
     print(f"\n{'='*30}")
     print("  TU TABLERO")
     print(f"{'='*30}")
-    tablero_jugador.imprimir_tablero()           # ← corregido
+    tablero_jugador.imprimir_tablero()          
     print(f"\n{'='*30}")
     print("  TABLERO ENEMIGO")
     print(f"{'='*30}")
-    tablero_maquina.mostrar_seguimiento()        # ← corregido
+    tablero_maquina.mostrar_seguimiento()       
 
 def pedir_coordenadas(disparo_realizado):
-    """Pide fila y col válidas y no repetidas al usuario."""
+    """Pide fila y col validas y no repetidas al usuario."""
     while True:
         try:
             fila = int(input(f"Introduce fila (0-{DIMENSION - 1}): "))
@@ -60,10 +57,6 @@ def pedir_coordenadas(disparo_realizado):
             return fila, col
         except ValueError:
             print("  Introduce numeros enteros.")
-<<<<<<< HEAD
-=======
-
->>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 
 def coordenadas_maquina(disparo_maquina):
     """Genera coordenadas aleatorias validas para la maquina."""
@@ -72,11 +65,7 @@ def coordenadas_maquina(disparo_maquina):
         col  = np.random.randint(0, DIMENSION)
         if (fila, col)in disparo_maquina:
             return fila, col
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
+        
 def imprimir_resultado(ganador):
     """Imprime el mensaje final segun quien haya ganado."""
     print(f"\n{'='*30}")
