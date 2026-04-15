@@ -1,26 +1,30 @@
+import numpy as np
+import random
+from variables import DIMENSION, AGUA, IMPACTO,FALLO, ORIENTACIONES, BARCO, BARCOS
+
+
 class Tablero:
-    import numpy as np
-    import random
-    from constantes import DIMENSION, AGUA, IMPACTO,FALLO, ORIENTACIONES, BARCO
+    
     """
     Representa el tablero de juego de un jugador o de la máquina.
     """
 
     def __init__(self, id_jugador: str, barcos : dict):
-        self.player_id = player_id
+        self.id_jugador = id_jugador
         self.barcos = barcos #diccionario de barcos
         self.size = DIMENSION
         self.tablero = np.full((self.size, self.size), AGUA)
         self.seguimiento = np.full((self.size, self.size), AGUA)
+        self.vidas = sum(self.barcos.values())  # Total de casillas ocupadas por barcos
 
     def colocar_barcos(self):
         """
         Coloca todos los barcos definidos en BARCOS.
         """
-        for eslora in barcos.values():
+        for eslora in self.barcos.values():
             self._colocar_barco_individual(eslora)
 
-    def _colocar_barco_individual(self):
+    def _colocar_barco_individual(self, eslora):
         """
         Coloca un barco individual de forma aleatoria.
         """
@@ -70,42 +74,48 @@ class Tablero:
 
         if self.tablero[x][y] == BARCO:
             self.tablero[x][y] = IMPACTO
-            return IMPACTO
+            self.seguimiento[x][y] = IMPACTO
+            self.vidas -= 1
+            return "impacto"
+        elif self.tablero[x][y] == IMPACTO or self.tablero[x][y] == FALLO:
+            return "repetido"
 
         elif self.tablero[x][y] == AGUA:
             self.tablero[x][y] = FALLO
-            return FALLO
+            self.seguimiento[x][y] = FALLO
+            return "fallo"
 
 
     
-    def mostrar_tablero(self, ocultar_barcos=False):
+    def imprimir_tablero(self, mostrar_barcos=True):
         """
-        Muestra el tablero propio.
-        """
-        print(f"\nTablero de {self.id_jugador}")
+        Imprime el tablero por pantalla con cabecera de columnas.
 
-        for fila in self.tablero:
-            fila_mostrar = []
+        Args:
+            mostrar_barcos: si False, oculta los barcos (útil para ver el tablero rival)
+        """
+        print("    " + "  ".join(str(i) for i in range(DIMENSION)))
+        print("   " + "---" * DIMENSION)
+        for i, fila in enumerate(self.tablero):
+            fila_visual = []
             for celda in fila:
-                if ocultar_barcos and celda == BARCO:
-                    fila_mostrar.append(AGUA)
+                if not mostrar_barcos and celda == BARCO:
+                    fila_visual.append(AGUA)
                 else:
-                    fila_mostrar.append(celda)
-            print(" ".join(fila_mostrar))
+                    fila_visual.append(celda)
+            print(f"{i:2} | " + "  ".join(fila_visual))
 
     def mostrar_seguimiento(self):
-        """
-        Muestra el tablero de disparos realizados al rival.
-        """
-        print(f"\nSeguimiento de {self.id_jugador}")
-
-        for fila in self.seguimiento:
-            print(" ".join(fila))
+        """Imprime solo los disparos realizados sobre este tablero (sin revelar barcos)."""
+        print("    " + "  ".join(str(i) for i in range(DIMENSION)))
+        print("   " + "---" * DIMENSION)
+        for i, fila in enumerate(self.seguimiento):
+            print(f"{i:2} | " + "  ".join(fila))
 
     def todos_barcos_hundidos(self) -> bool:
         """
         Comprueba si ya no quedan barcos.
         """
-        return not (BARCO in self.tablero)
+        return (self.vidas <= 0)
 
-        asfa
+        
