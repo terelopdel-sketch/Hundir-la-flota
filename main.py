@@ -4,7 +4,7 @@
 import numpy as np
 
 from clases import *
-from funciones import (pedir_coordenadas, mostrar_tableros, imprimir_resultado, mensaje_bienvenida, turno_maquina)
+from funciones import (pedir_coordenadas, mostrar_tableros, imprimir_resultado, mensaje_bienvenida, coordenadas_maquina)
 from variables import *
 
 
@@ -12,8 +12,8 @@ def main():
     bienvenida()
 
     # ---- Inicialización (solo una vez) ----
-    tablero_jugador = Tablero(jugador_id="Jugador", barcos=BARCOS)
-    tablero_maquina = Tablero(jugador_id="Máquina", barcos=BARCOS)
+    tablero_jugador = Tablero(id_jugador="jugador", barcos=BARCOS)
+    tablero_maquina = Tablero(id_jugador="maquina", barcos=BARCOS)
 
     tablero_jugador.colocar_barcos()
     tablero_maquina.colocar_barcos()
