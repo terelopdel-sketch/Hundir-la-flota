@@ -24,23 +24,15 @@ def bienvenida():
   
   5. Introduce fila y columna (0-{dim}) 
      cuando se te pida.
-    """.format(dim=DIMENSION - 1))
-    print(f"{'='*40}")
-    input("Pulsa ENTER para comenzar")
+          
+  6. Simbolos de tablero 
+     - Barco intacto: 'O'
+     - Barco impacto: 'X'
+     - Agua: ''
+     - Disparo fallido: '-'   
+          """) 
+   
 =======
-
-def mostrar_tableros(tablero_jugador, tablero_maquina):
-    """Muestra el tablero del jugador completo y el de la máquina sin barcos."""
-    print(f"\n{'='*30}")
-    print("  TU TABLERO")
-    print(f"{'='*30}")
-    tablero_jugador.imprimir(mostrar_barco=True)
-
-    print(f"\n{'='*30}")
-    print("  TABLERO ENEMIGO")
-    print(f"{'='*30}")
-    tablero_maquina.imprimir()
->>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 
 def mostrar_tableros(tablero_jugador, tablero_maquina):
     """Muestra el tablero del jugador completo y el de la máquina sin barcos."""
@@ -53,7 +45,7 @@ def mostrar_tableros(tablero_jugador, tablero_maquina):
     print(f"{'='*30}")
     tablero_maquina.mostrar_seguimiento()        # ← corregido
 
-def pedir_coordenadas(tablero_visible):
+def pedir_coordenadas(disparo_realizado):
     """Pide fila y col válidas y no repetidas al usuario."""
     while True:
         try:
@@ -62,7 +54,7 @@ def pedir_coordenadas(tablero_visible):
             if not (0 <= fila < DIMENSION and 0 <= col < DIMENSION):
                 print(f"  Coordenadas fuera de rango (0-{DIMENSION - 1}).")
                 continue
-            if tablero_visible[fila, col] in [IMPACTO, FALLO]:
+            if (fila, col) in disparo_realizado:
                 print("  Ya disparaste ahi. Elige otra posicion.")
                 continue
             return fila, col
@@ -73,12 +65,12 @@ def pedir_coordenadas(tablero_visible):
 
 >>>>>>> 0c376fe7fc574b2b0d6c8531b2b2cd187d66eab6
 
-def turno_maquina(tablero_visible):
+def coordenadas_maquina(disparo_maquina):
     """Genera coordenadas aleatorias validas para la maquina."""
     while True:
         fila = np.random.randint(0, DIMENSION)
         col  = np.random.randint(0, DIMENSION)
-        if tablero_visible[fila, col] not in [IMPACTO, FALLO]:
+        if (fila, col)in disparo_maquina:
             return fila, col
 
 <<<<<<< HEAD
@@ -93,8 +85,6 @@ def imprimir_resultado(ganador):
     else:
         print("  La maquina ha ganado. Todos tus barcos han sido hundidos.")
     print(f"{'='*30}")
-    coord = f"({fila}, {col})"
-
     if impacto:
         print(f"{jugador} disparó en {coord} -> ¡IMPACTO!")
     else:
