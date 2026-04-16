@@ -17,8 +17,9 @@ def coordenadas_maquina(disparo_maquina):
     while True:
         fila = np.random.randint(0, DIMENSION)
         col  = np.random.randint(0, DIMENSION)
-        if (fila, col)in disparo_maquina:
-            return fila, col
+        if (fila, col) not in disparo_maquina:
+            return (fila, col)
+        
         
 
 def pedir_coordenadas(disparo_realizado):
@@ -35,7 +36,7 @@ def pedir_coordenadas(disparo_realizado):
                 continue
             return fila, col
         except ValueError:
-            print("  Introduce numeros enteros.")
+            print(" ¡ Introduce numeros enteros.!")
 
 
 def mostrar_tableros(tablero_jugador, tablero_maquina):
