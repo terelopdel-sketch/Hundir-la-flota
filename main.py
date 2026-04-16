@@ -54,7 +54,6 @@ def main():
         turno_maquina = True
         while turno_maquina:
             fila, col = coordenadas_maquina(disparos_maquina)
-            fila, col = turno_maquina(disparos_maquina)
             disparos_maquina.add((fila, col))
 
             resultado = tablero_jugador.recibir_disparo(fila, col)
