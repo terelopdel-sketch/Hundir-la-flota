@@ -35,7 +35,7 @@ def pedir_coordenadas(disparo_realizado):
                 continue
             return fila, col
         except ValueError:
-            print("  Introduce numeros enteros.")
+            print(" ¡ Introduce numeros enteros.!")
 
 
 def mostrar_tableros(tablero_jugador, tablero_maquina):
