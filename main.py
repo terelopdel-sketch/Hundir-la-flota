@@ -5,7 +5,6 @@ import numpy as np
 
 from clases import *
 from funciones import (pedir_coordenadas, mostrar_tableros, imprimir_resultado, bienvenida, coordenadas_maquina)
-from funciones import (pedir_coordenadas, mostrar_tableros, imprimir_resultado, mensaje_bienvenida, coordenadas_maquina)
 from variables import *
 
 
@@ -44,11 +43,9 @@ def main():
                     imprimir_resultado("jugador")
                     return  # Fin del juego
                 else:
-                    print("¡ Vuelve a dispara !")
-                print(f" ¡IMPACTO en ({fila}, {col})! Vuelves a disparar.")
-                if tablero_maquina.todos_barcos_hundidos():
-                    imprimir_resultado("jugador")
-                    return  # Fin del juego
+                    mostrar_tableros(tablero_jugador, tablero_maquina)
+                    print("Vuelve a disparar")
+
             else:
                 print(f" Agua en ({fila}, {col}). Turno de la máquina.")
                 turno_jugador = False  # Pasa el turno a la máquina
