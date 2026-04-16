@@ -17,7 +17,7 @@ def coordenadas_maquina(disparo_maquina):
     while True:
         fila = np.random.randint(0, DIMENSION)
         col  = np.random.randint(0, DIMENSION)
-        if (fila, col)in disparo_maquina:
+        if (fila, col) not in disparo_maquina:
             return fila, col
         
 
