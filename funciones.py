@@ -74,8 +74,5 @@ def imprimir_resultado(ganador):
     else:
         print("  La maquina ha ganado. Todos tus barcos han sido hundidos.")
     print(f"{'='*30}")
-    if impacto:
-        print(f"{jugador} disparó en {coord} -> ¡IMPACTO!")
-    else:
-        print(f"{jugador} disparó en {coord} -> Agua.")
+  
 
